@@ -6,16 +6,16 @@ import {
     responsiveNumberValidator,
 } from '@/components/utils/prop-validator'
 import Box from '@/components/core/layout/Box'
-import Col from './constants'
-import { StyledCol } from './styled-components'
+import Column from './constants'
+import { StyledColumn } from './styled-components'
 
 /**
- * Use `<Col>` to organize content within a `<Row>`, with the option to modify that organization at various viewport breakpoints. The component uses global `flexboxgrid` classes and is modeled off of [Bootstrap’s CSS grid](http://getbootstrap.com/css/#grid).
+ * Use `<Column>` to organize content within a `<Row>`, with the option to modify that organization at various viewport breakpoints. The component uses global `flexboxgrid` classes and is modeled off of [Bootstrap’s CSS grid](http://getbootstrap.com/css/#grid).
  *
  * See [`<Grid>`](/#/Layout/Grid) for examples.
  */
 export default {
-    name: 'Col',
+    name: 'Column',
     functional: true,
     props: {
         /**
@@ -23,7 +23,7 @@ export default {
          */
         alignSelf: {
             type: String,
-            validator: value => value in Col.AlignSelf,
+            validator: value => value in Column.AlignSelf,
         },
         /**
          * Whether or not to include padding on the bottom of the column
@@ -42,7 +42,7 @@ export default {
         display: {
             default: 'Block',
             type: [Object, String],
-            validator: value => responsiveValidator(value, Col.Display),
+            validator: value => responsiveValidator(value, Column.Display),
         },
         /**
          * Fills the outer contiainer height
@@ -132,7 +132,7 @@ export default {
         }).join(' ')
 
         return (
-            <StyledCol
+            <StyledColumn
                 alignSelf={alignSelf}
                 class={classnames}
                 debug={debug}
@@ -142,7 +142,7 @@ export default {
                 <Box fluidHeight={fluidHeight} pb={bottomPadding ? 2 : 0}>
                     {children}
                 </Box>
-            </StyledCol>
+            </StyledColumn>
         )
     },
 }
@@ -151,6 +151,6 @@ export default {
 
 <docs>
 ```
-<Col debug>Test</Col>
+<Column debug>Test</Column>
 ```
 </docs>

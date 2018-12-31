@@ -1,7 +1,7 @@
 import styled from 'vue-styled-components'
 import { style, responsiveStyle } from '@/components/utils/css'
 import Theme from '@/components/theme'
-import Col from './constants'
+import Column from './constants'
 
 const props = {
     alignSelf: String,
@@ -13,8 +13,8 @@ const props = {
 const styles = props => {
     const s = []
     s.push(
-        style('alignSelf', Col.AlignSelf[props.alignSelf]),
-        responsiveStyle('display', props.display, v => Col.Display[v]),
+        style('alignSelf', Column.AlignSelf[props.alignSelf]),
+        responsiveStyle('display', props.display, v => Column.Display[v]),
         responsiveStyle('order', props.order),
     )
     return `
@@ -27,6 +27,6 @@ const styles = props => {
     `
 }
 
-export const StyledCol = styled('div', props)`
+export const StyledColumn = styled('div', props)`
     ${styles};
 `
