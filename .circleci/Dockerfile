@@ -11,8 +11,12 @@ RUN chmod u+x /usr/local/bin/yarn
 
 # Copy over node requirements and install
 ADD package.json /home/web/
-RUN yarn
+RUN yarn --prod
 
-# Copy over remaining code
+# Build for production
 ADD . /home/web/
+RUN yarn build
+
+# Clean up files
+RUN rm -r node_modules public src package.json tsconfig.json
 VOLUME /home/web

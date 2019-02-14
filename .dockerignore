@@ -1,5 +1,6 @@
+.circleci
 .gitignore
-yarn.lock
 node_modules/
-readme.md
+README.md
 styleguide.config.js
+tslint.json
