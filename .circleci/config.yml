@@ -1,65 +1,72 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.4
+  aws-s3: circleci/aws-s3@1.0.4
+references:
+  - &set_up_environment_variables
+    run:
+      name: Setup common environment variables
+      command: |
+        echo 'REACT_APP_PLAID_ENV=${PLAID_ENV}' >> $BASH_ENV
+        echo 'REACT_APP_PLAID_PUBLIC_KEY=${PLAID_PUBLIC_KEY}' >> $BASH_ENV
+  - &aws_configure
+    aws-cli/configure:
+      aws-access-key-id: $AWS_ACCESS_KEY_ID
+      aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
+      aws-region: "$AWS_DEFAULT_REGION"
+  - &s3_sync
+    run:
+      name: Deploy to S3
+      command: |
+        aws s3 sync workspace/build s3://${AWS_S3_BUCKET_NAME} --delete
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.1
+      - image: circleci/node:9.10
     steps:
       - checkout
       - setup_remote_docker
+      - *set_up_environment_variables
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Setup common environment variables
+          name: Install dependencies
           command: |
-            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
-            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${CIRCLE_SHA1}"' >> $BASH_ENV
-            echo 'export ECR_REPOSITORY_NAME="${REACT_APP_PLAID_ENV=$PLAID_ENV}"' >> $BASH_ENV
-            echo 'export ECR_REPOSITORY_NAME="${REACT_APP_PLAID_PUBLIC_KEY=$PLAID_PUBLIC_KEY}"' >> $BASH_ENV
+            yarn --prod --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
-          name: Build image
+          name: Build app for production
           command: |
-            docker build -f .circleci/Dockerfile -t $FULL_IMAGE_NAME .
-      - run:
-          name: Save image to an archive
-          command: |
-            mkdir docker-image
-            docker save -o docker-image/image.tar $FULL_IMAGE_NAME
+            yarn build
       - persist_to_workspace:
           root: .
           paths:
-            - docker-image
+            - build
   deploy:
     docker:
       - image: circleci/python:3.6.1
-    environment:
-      AWS_DEFAULT_OUTPUT: json
     steps:
       - checkout
       - setup_remote_docker
       - attach_workspace:
           at: workspace
       - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: "$AWS_ACCESS_KEY_ID"
-          aws-region: "$AWS_DEFAULT_REGION"
-      - run:
-          name: Load image
-          command: |
-            docker load --input workspace/docker-image/image.tar
-      - run:
-          name: Setup common environment variables
-          command: |
-            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
-      - run:
-          name: Push image
-          command: |
-            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --registry-ids $AWS_ACCOUNT_ID --no-include-email)
-            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME:$CIRCLE_SHA1
+      - *aws_configure
+      - *set_up_environment_variables
+      - *s3_sync
 workflows:
   build-deploy:
     jobs:
-      - build
+      - build:
+          context: wilbur
       - deploy:
+          context: wilbur
           requires:
             - build
           filters:
