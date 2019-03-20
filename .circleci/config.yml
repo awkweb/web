@@ -64,9 +64,9 @@ workflows:
   build-deploy:
     jobs:
       - build:
-          context: wilbur
+          context: butter
       - deploy:
-          context: wilbur
+          context: butter
           requires:
             - build
           filters:

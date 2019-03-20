@@ -26,18 +26,18 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 const theme = Object.freeze({
-    name: "wilbur",
-    buttons,
-    colors,
-    cornerRadii,
-    field,
-    icon,
-    responsive,
-    strokeWidths,
-    text,
-    transitions,
-    units,
-    zIndex
+  name: "butter",
+  buttons,
+  colors,
+  cornerRadii,
+  field,
+  icon,
+  responsive,
+  strokeWidths,
+  text,
+  transitions,
+  units,
+  zIndex
 });
 
 export type Theme = typeof theme;
