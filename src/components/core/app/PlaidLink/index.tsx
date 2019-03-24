@@ -49,7 +49,7 @@ export class PlaidLink extends React.Component<Props> {
     initializeURL: "https://cdn.plaid.com/link/v2/stable/link-initialize.js"
   };
 
-  public async componentWillMount() {
+  public async componentDidMount() {
     try {
       const { initializeURL } = this.state;
       await this.loadScript(initializeURL);

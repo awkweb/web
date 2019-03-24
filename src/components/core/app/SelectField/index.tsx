@@ -1,45 +1,38 @@
-import * as React from "react";
-import { StyledFieldset, StyledLabel } from "../../form/Field";
-import { cssFactory } from "../../../utils/styled-components";
-import { css } from "styled-components";
-import field from "../../../theme/field";
-import { AnyColor as Color } from "../../../types/color";
-import { Weight, Size } from "../../../types/text";
-import Select from "react-select";
-import { GroupType, ValueType, ActionMeta } from "react-select/lib/types";
-import { Box } from "../../layout/Box";
+import * as React from 'react'
+import Select from 'react-select'
+// tslint:disable-next-line
+import { ActionMeta, GroupType, ValueType } from 'react-select/lib/types'
+import { css } from 'styled-components'
+
+import field from '../../../theme/field'
+import { AnyColor as Color } from '../../../types/color'
+import { Size, Weight } from '../../../types/text'
+import { cssFactory } from '../../../utils/styled-components'
+import { StyledFieldset, StyledLabel } from '../../form/Field'
+import { Box } from '../../layout/Box'
 
 interface Props {
-    error?: string;
-    id: string;
-    options?: GroupType<any>[] | any[] | undefined;
-    placeholder: string;
-    value: any;
+    error?: string
+    id: string
+    options?: Array<GroupType<any>> | any[] | undefined
+    placeholder: string
+    value: any
     onChange: (
         value: ValueType<{
-            value: string;
-            label: string;
+            value: string
+            label: string
         }>,
-        action: ActionMeta
-    ) => void;
+        action: ActionMeta,
+    ) => void
 }
 
 export class SelectField extends React.Component<Props> {
-    state = { isTouched: false };
+    public state = { isTouched: false }
 
-    private onBlur = () => {
-        const { isTouched } = this.state;
-        if (!isTouched) {
-            this.setState({
-                isTouched: true
-            });
-        }
-    };
-
-    render() {
-        const { error, id, options, placeholder, value, onChange } = this.props;
-        const { isTouched } = this.state;
-        const hasError = isTouched && !!error;
+    public render() {
+        const { error, id, options, placeholder, value, onChange } = this.props
+        const { isTouched } = this.state
+        const hasError = isTouched && !!error
         return (
             <Box css={genInputCSS(hasError)}>
                 <StyledFieldset>
@@ -47,7 +40,7 @@ export class SelectField extends React.Component<Props> {
                         {...{
                             active: !!value || hasError,
                             error: hasError,
-                            htmlFor: id
+                            htmlFor: id,
                         }}
                     >
                         {hasError ? error : placeholder}
@@ -56,7 +49,7 @@ export class SelectField extends React.Component<Props> {
                         classNamePrefix="react-select"
                         menuPlacement="auto"
                         name={id}
-                        placeholder={hasError ? "" : placeholder}
+                        placeholder={hasError ? '' : placeholder}
                         options={options}
                         value={value}
                         onBlur={this.onBlur}
@@ -64,7 +57,16 @@ export class SelectField extends React.Component<Props> {
                     />
                 </StyledFieldset>
             </Box>
-        );
+        )
+    }
+
+    private onBlur = () => {
+        const { isTouched } = this.state
+        if (!isTouched) {
+            this.setState({
+                isTouched: true,
+            })
+        }
     }
 }
 
@@ -111,4 +113,8 @@ const genInputCSS = (error: boolean) =>
         padding-bottom: 0.65rem;
         padding-top: 0.65rem;
     }
-`;
+
+    .react-select__single-value {
+        margin: 0;
+    }
+`

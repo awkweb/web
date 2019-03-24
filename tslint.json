@@ -16,7 +16,6 @@
                 "module-source-path": "full"
             }
         ],
-        // tslint-react
         "jsx-alignment": true,
         "jsx-ban-elements": true,
         "jsx-ban-props": true,

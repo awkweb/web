@@ -22,14 +22,15 @@ interface Props {
   rootStore: RootStore;
 }
 
-class RegisterClass extends React.Component<Props> {
-  public componentWillMount() {
+class RegisterPage extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
     const {
       location,
       rootStore: {
         registerStore: { setEmail }
       }
-    } = this.props;
+    } = props;
     const queryParams = parse(location.search);
     const email = get(() => queryParams.email);
     if (email) {
@@ -104,7 +105,6 @@ class RegisterClass extends React.Component<Props> {
                       id="email"
                       isValid={validations.email.valid}
                       label="Email"
-                      showSuccess={true}
                       value={email}
                       onChange={this.onChangeEmail}
                     />
@@ -116,7 +116,6 @@ class RegisterClass extends React.Component<Props> {
                       id="password"
                       isValid={validations.password.valid}
                       label="Password"
-                      showSuccess={true}
                       type={Field.Type.Password}
                       value={password}
                       onChange={this.onChangePassword}
@@ -143,7 +142,6 @@ class RegisterClass extends React.Component<Props> {
                       id="confirmPassword"
                       isValid={validations.passwordConfirm.valid}
                       label="Confirm Password"
-                      showSuccess={true}
                       type={Field.Type.Password}
                       value={passwordConfirm}
                       onChange={this.onChangeConfirmPassword}
@@ -211,4 +209,4 @@ class RegisterClass extends React.Component<Props> {
   };
 }
 
-export const Register = inject("rootStore")(observer(RegisterClass));
+export const Register = inject("rootStore")(observer(RegisterPage));
