@@ -1,77 +1,77 @@
-import * as React from "react";
-import styled, { css } from "styled-components";
+import * as React from 'react'
+import styled, { css } from 'styled-components'
 
-import { AnyColor as Color } from "../../../types/color";
-import { style } from "../../../utils/css";
-import { cssFactory } from "../../../utils/styled-components";
-import { Box } from "../../layout/Box";
+import { AnyColor as Color } from '../../../types/color'
+import { style } from '../../../utils/css'
+import { cssFactory } from '../../../utils/styled-components'
+import { Box } from '../../layout/Box'
 
 interface SharedProps {
     /**
      * Defaults to `Field.Color.Gold3`.
      */
-    color: Color;
+    color: Color
 
     /**
      * Center loader in container.
      */
-    center: boolean;
+    center: boolean
 }
 
 /**
  * Use `<Loader>` while there is a large amount of content not ready for viewing.
  */
 export class Loader extends React.Component<SharedProps> {
-    public static Color = Color;
+    public static Color = Color
 
-    public static defaultProps = { color: Color.Gold3, center: true };
+    public static defaultProps = { color: Color.Gold3, center: true }
 
     public render() {
-        const { color, center } = this.props;
+        const { color, center } = this.props
 
         return (
             <Box
                 display={Box.Display.Flex}
                 justifyContent={center ? Box.JustifyContent.Center : undefined}
-                pt={3}
             >
                 {[0, 1, 2].map(v => (
                     <StyledLoader color={color} key={v} />
                 ))}
             </Box>
-        );
+        )
     }
 }
 
 interface LoaderProps {
-    color: Color;
+    color: Color
 }
 
 const loaderStyles = cssFactory<LoaderProps>(css)`
     @keyframes loader {
-        from {
+        0%,
+        80%,
+        100% {
+            opacity: 0;
+        }
+        30%,
+        50% {
             opacity: 1;
-            transform: translateY(0);
-        }
-        to {
-            opacity: 0.1;
-            transform: translateY(-1rem);
         }
     }
-    animation: loader .6s infinite alternate;
-    ${props => style("background", props.theme.colors[props.color])};
+    animation: loader .8s infinite linear;
+    ${props => style('background', props.theme.colors[props.color])};
     border-radius: 50%;
-    height: 1rem;
-    margin: 0 0.2rem;
-    width: 1rem;
+    height: 9px;
+    margin: 0 3px;
+    width: 9px;
+    &:nth-child(1) {
+        animation-delay: -0.3s;
+    }
     &:nth-child(2) {
-        animation-delay: 0.2s;
+        animation-delay: -0.15s;
     }
-    &:nth-child(3) {
-        animation-delay: 0.4s;
-    }
-`;
+`
 
 const StyledLoader = styled.div`
     ${loaderStyles}
-`;
+`
