@@ -3,22 +3,17 @@ orbs:
   aws-cli: circleci/aws-cli@0.1.4
   aws-s3: circleci/aws-s3@1.0.4
 references:
-  - &set_up_environment_variables
-    run:
-      name: Setup common environment variables
-      command: |
-        echo 'REACT_APP_PLAID_ENV=${PLAID_ENV}' >> $BASH_ENV
-        echo 'REACT_APP_PLAID_PUBLIC_KEY=${PLAID_PUBLIC_KEY}' >> $BASH_ENV
   - &aws_configure
     aws-cli/configure:
       aws-access-key-id: $AWS_ACCESS_KEY_ID
       aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
-      aws-region: "$AWS_DEFAULT_REGION"
+      aws-region: '$AWS_DEFAULT_REGION'
   - &s3_sync
     run:
       name: Deploy to S3
       command: |
         aws s3 sync workspace/build s3://${AWS_S3_BUCKET_NAME} --delete
+        aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths /index.html /service-worker.js
 jobs:
   build:
     docker:
@@ -26,7 +21,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - *set_up_environment_variables
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -58,7 +52,6 @@ jobs:
           at: workspace
       - aws-cli/install
       - *aws_configure
-      - *set_up_environment_variables
       - *s3_sync
 workflows:
   build-deploy:
