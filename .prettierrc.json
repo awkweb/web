@@ -5,10 +5,6 @@
     "tabWidth": 4,
     "overrides": [
         {
-            "files": ".prettierrc",
-            "options": { "parser": "json" }
-        },
-        {
             "files": ["*.yml", "*.json"],
             "options": {
                 "tabWidth": 2
