@@ -1,12 +1,12 @@
 export enum Color {
-    Brand = "gold3",
-    Primary = "blue3",
-    Secondary = "gray8",
-    Error = "red3",
-    Success = "green3"
+    Brand = 'gold3',
+    Primary = 'blue3',
+    Secondary = 'gray8',
+    Error = 'red3',
+    Success = 'green3',
 }
 
 export enum Size {
-    Md = "sm",
-    Lg = "md"
+    Md = 'sm',
+    Lg = 'md',
 }

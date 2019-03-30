@@ -1,29 +1,29 @@
-import { AnyColor as Color } from "../types/color";
+import { AnyColor as Color } from '../types/color'
 
-import { Colors } from "./colors";
-import { strokeWidths } from "./stroke-widths";
+import { Colors } from './colors'
+import { strokeWidths } from './stroke-widths'
 
-const getBorderColor = (colorName: Color, colors: Colors) => colors[colorName];
+const getBorderColor = (colorName: Color, colors: Colors) => colors[colorName]
 
-const getBorderWidth = () => strokeWidths.default;
+const getBorderWidth = () => strokeWidths.default
 
 const getBorderStyle = (
     colorName: Color,
     colors: Colors,
-    error: boolean
+    error: boolean,
 ): string => {
     return `${getBorderWidth()} solid ${
         error ? colors[Color.Error] : getBorderColor(colorName, colors)
-    }`;
-};
+    }`
+}
 
 const getFocusStyles = (
     colorName: Color,
     colors: Colors,
-    error: boolean
+    error: boolean,
 ): string => {
-    return getBorderStyle(colorName, colors, error);
-};
+    return getBorderStyle(colorName, colors, error)
+}
 
 const field = Object.freeze({
     getBorderStyle,
@@ -31,9 +31,9 @@ const field = Object.freeze({
 
     padding: {
         input: [0, 4, 0, 2],
-        textarea: [1, 4, 0, 2]
-    }
-});
+        textarea: [1.5, 4, 0, 2],
+    },
+})
 
-export type Field = typeof field;
-export default field;
+export type Field = typeof field
+export default field

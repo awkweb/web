@@ -1,31 +1,31 @@
-import moment, { Moment } from "moment";
-import React from "react";
-import { DayPickerRangeController } from "react-dates";
-import { css } from "styled-components";
+import moment, { Moment } from 'moment'
+import React from 'react'
+import { DayPickerRangeController } from 'react-dates'
+import { css } from 'styled-components'
 
-import { Box, Text } from "../../../../components";
-import { cssFactory } from "../../../../components/utils/styled-components";
+import { Box, Text } from '../../../../components'
+import { cssFactory } from '../../../../components/utils/styled-components'
 
 interface Props {
-    startDate: Moment | null;
-    endDate: Moment | null;
+    startDate: Moment | null
+    endDate: Moment | null
     handleDatesChange: (
         startDate: Moment | null,
-        endDate: Moment | null
-    ) => void;
-    handleClose: (startDate: Moment, endDate: Moment | null) => void;
+        endDate: Moment | null,
+    ) => void
+    handleClose: (startDate: Moment, endDate: Moment | null) => void
 }
 
 export default class DateRangePicker extends React.Component<Props> {
     public state = {
         datesChanged: false,
-        focusedInput: "startDate",
-        isOpen: false
-    };
+        focusedInput: 'startDate',
+        isOpen: false,
+    }
 
     public render() {
-        const { endDate, startDate } = this.props;
-        const { focusedInput, isOpen } = this.state;
+        const { endDate, startDate } = this.props
+        const { focusedInput, isOpen } = this.state
         return (
             <Box position={Box.Position.Relative}>
                 <Box
@@ -57,63 +57,63 @@ export default class DateRangePicker extends React.Component<Props> {
                     </Box>
                 )}
             </Box>
-        );
+        )
     }
 
     private onDatesChange = (arg: {
-        startDate: Moment | null;
-        endDate: Moment | null;
+        startDate: Moment | null
+        endDate: Moment | null
     }) => {
-        const { startDate, endDate } = arg;
-        this.props.handleDatesChange(startDate, endDate);
+        const { startDate, endDate } = arg
+        this.props.handleDatesChange(startDate, endDate)
 
         if (!this.state.datesChanged) {
-            this.setState({ datesChanged: true });
+            this.setState({ datesChanged: true })
         }
-    };
+    }
 
-    private onFocusChange = (focusedInput: "startDate" | "endDate" | null) => {
-        this.setState({ focusedInput });
+    private onFocusChange = (focusedInput: 'startDate' | 'endDate' | null) => {
+        this.setState({ focusedInput })
         if (!focusedInput) {
             if (this.state.datesChanged) {
-                const { endDate, startDate, handleClose } = this.props;
-                handleClose(startDate as Moment, endDate);
+                const { endDate, startDate, handleClose } = this.props
+                handleClose(startDate as Moment, endDate)
             }
-            this.setState({ datesChanged: false, isOpen: false });
+            this.setState({ datesChanged: false, isOpen: false })
         }
-    };
+    }
 
     private onClickButton = () => {
-        const { isOpen } = this.state;
-        this.onFocusChange("startDate");
-        this.setState({ isOpen: !isOpen });
-    };
+        const { isOpen } = this.state
+        this.onFocusChange('startDate')
+        this.setState({ isOpen: !isOpen })
+    }
 
     private onOutsideClick = () => {
-        this.onFocusChange(null);
-    };
+        this.onFocusChange(null)
+    }
 
-    private isOutsideRange = () => false;
+    private isOutsideRange = () => false
 
     private displayText = () => {
-        const { startDate, endDate } = this.props;
-        const dateOne = startDate && moment(startDate);
-        const dateTwo = endDate && moment(endDate);
-        let formattedDates = dateOne ? dateOne.format("MMM D") : "Start";
-        if (dateOne && !dateOne.isSame(dateTwo as Moment, "day")) {
+        const { startDate, endDate } = this.props
+        const dateOne = startDate && moment(startDate)
+        const dateTwo = endDate && moment(endDate)
+        let formattedDates = dateOne ? dateOne.format('MMM D') : 'Start'
+        if (dateOne && !dateOne.isSame(dateTwo as Moment, 'day')) {
             if (dateTwo) {
-                const dateFormat = dateOne.isSame(dateTwo, "month")
-                    ? "D"
-                    : "MMM D";
+                const dateFormat = dateOne.isSame(dateTwo, 'month')
+                    ? 'D'
+                    : 'MMM D'
                 formattedDates = `${formattedDates} - ${dateTwo.format(
-                    dateFormat
-                )}`;
+                    dateFormat,
+                )}`
             } else {
-                formattedDates = `${formattedDates} - End`;
+                formattedDates = `${formattedDates} - End`
             }
         }
-        return formattedDates;
-    };
+        return formattedDates
+    }
 }
 
 const genDayPickerRangeControllerContainer = () =>
@@ -122,4 +122,4 @@ const genDayPickerRangeControllerContainer = () =>
     right: 0;
     top: 3rem;
     z-index: ${props => props.theme.zIndex.Z_INDEX_2};
-`;
+`

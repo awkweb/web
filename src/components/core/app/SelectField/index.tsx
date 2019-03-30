@@ -76,7 +76,7 @@ const genInputCSS = (error: boolean) =>
 		border: ${props =>
             field.getBorderStyle(Color.Gray8, props.theme.colors, error)};
 		font-weight: ${props => props.theme.text.getWeight(Weight.Normal)};
-		font-size: ${props => props.theme.text.getSize(Size.Lg)};
+		font-size: ${props => props.theme.text.getSize(Size.Md)};
 		height: 2.8125rem;
 		padding: 0;
 		outline: 0;
@@ -105,6 +105,7 @@ const genInputCSS = (error: boolean) =>
 	.react-select__menu {
         top: 54px !important;
         width: 100%;
+        z-index: ${props => props.theme.zIndex.Z_INDEX_2};
     }
 
     .react-select__option {
@@ -115,6 +116,8 @@ const genInputCSS = (error: boolean) =>
     }
 
     .react-select__single-value {
+        color: ${props => props.theme.colors.gray1};
+        font-size: ${props => props.theme.text.getSize(Size.Md)};
         margin: 0;
     }
 `

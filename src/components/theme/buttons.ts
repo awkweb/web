@@ -1,121 +1,121 @@
-import { Color as ButtonColor } from "../types/button";
-import { AnyColor } from "../types/color";
+import { Color as ButtonColor } from '../types/button'
+import { AnyColor } from '../types/color'
 
-import { Colors } from "./colors";
-import { strokeWidths } from "./stroke-widths";
+import { Colors } from './colors'
+import { strokeWidths } from './stroke-widths'
 
 const getBackgroundColor = (
     colorName: ButtonColor,
     colors: Colors,
-    noBackground?: boolean
+    noBackground?: boolean,
 ) => {
-    return noBackground ? "transparent" : colors[colorName];
-};
+    return noBackground ? 'transparent' : colors[colorName]
+}
 
 const getBorderColor = (colorName: ButtonColor, colors: Colors) =>
-    getBackgroundColor(colorName, colors);
+    getBackgroundColor(colorName, colors)
 
-const getBorderWidth = () => strokeWidths.default;
+const getBorderWidth = () => strokeWidths.default
 
 const getBorderStyle = (
     colorName: ButtonColor,
     colors: Colors,
-    noBorder?: boolean
+    noBorder?: boolean,
 ): string => {
     return noBorder
         ? `none`
-        : `${getBorderWidth()} solid ${getBorderColor(colorName, colors)}`;
-};
+        : `${getBorderWidth()} solid ${getBorderColor(colorName, colors)}`
+}
 
 const getTextColorName = (colorName: ButtonColor): AnyColor => {
     switch (colorName) {
         case ButtonColor.Brand:
         case ButtonColor.Secondary:
-            return AnyColor.Gray1;
+            return AnyColor.Gray1
         default:
-            return AnyColor.White;
+            return AnyColor.White
     }
-};
+}
 
 const getLoadingSpinnerColorName = (
     colorName: ButtonColor,
-    colors: Colors
+    colors: Colors,
 ): string => {
-    return colors[getTextColorName(colorName)];
-};
+    return colors[getTextColorName(colorName)]
+}
 
 const getTextColor = (
     colorName: ButtonColor,
     colors: Colors,
-    noBackground?: boolean
+    noBackground?: boolean,
 ): string => {
     return noBackground
         ? colors[getActiveColorName(colorName)]
-        : colors[getTextColorName(colorName)];
-};
+        : colors[getTextColorName(colorName)]
+}
 
 const getFocusStyles = (): string => `
     outline: none;
-`;
+`
 
 const getHoverColorName = (colorName: ButtonColor): AnyColor => {
     switch (colorName) {
         case ButtonColor.Brand:
-            return AnyColor.Gold4;
+            return AnyColor.Gold4
         case ButtonColor.Primary:
-            return AnyColor.Blue4;
+            return AnyColor.Blue4
         case ButtonColor.Success:
-            return AnyColor.Green4;
+            return AnyColor.Green4
         case ButtonColor.Error:
-            return AnyColor.Red4;
+            return AnyColor.Red4
         case ButtonColor.Secondary:
         default:
-            return AnyColor.Gray9;
+            return AnyColor.Gray9
     }
-};
+}
 
 const getHoverStyles = (
     colorName: ButtonColor,
     colors: Colors,
-    noBackground?: boolean
+    noBackground?: boolean,
 ): string => {
-    const color = colors[getHoverColorName(colorName)];
+    const color = colors[getHoverColorName(colorName)]
     return `
-        background-color: ${noBackground ? "transparent" : color};
+        background-color: ${noBackground ? 'transparent' : color};
         border-color: ${color};
-    `;
-};
+    `
+}
 
 const getActiveColorName = (colorName: ButtonColor): AnyColor => {
     switch (colorName) {
         case ButtonColor.Brand:
-            return AnyColor.Gold2;
+            return AnyColor.Gold2
         case ButtonColor.Primary:
-            return AnyColor.Blue2;
+            return AnyColor.Blue2
         case ButtonColor.Success:
-            return AnyColor.Green2;
+            return AnyColor.Green2
         case ButtonColor.Error:
-            return AnyColor.Red2;
+            return AnyColor.Red2
         case ButtonColor.Secondary:
         default:
-            return AnyColor.Gray7;
+            return AnyColor.Gray7
     }
-};
+}
 
 const getActiveStyles = (
     colorName: ButtonColor,
     colors: Colors,
-    noBackground?: boolean
+    noBackground?: boolean,
 ): string => {
-    const color = colors[getActiveColorName(colorName)];
+    const color = colors[getActiveColorName(colorName)]
     return `
-        background-color: ${noBackground ? "transparent" : color};
+        background-color: ${noBackground ? 'transparent' : color};
         border-color: ${color};
-    `;
-};
+    `
+}
 
 const buttons = Object.freeze({
-    fontWeight: 500,
+    fontWeight: 600,
     getActiveStyles,
     getBackgroundColor,
     getBorderStyle,
@@ -127,9 +127,9 @@ const buttons = Object.freeze({
 
     padding: {
         sm: [1, 2],
-        md: [1.5, 2]
-    }
-});
+        md: [1.5, 2],
+    },
+})
 
-export type Buttons = typeof buttons;
-export default buttons;
+export type Buttons = typeof buttons
+export default buttons

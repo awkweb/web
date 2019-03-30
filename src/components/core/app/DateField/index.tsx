@@ -1,41 +1,41 @@
-import { Moment } from "moment";
-import * as React from "react";
-import { SingleDatePicker } from "react-dates";
-import { css } from "styled-components";
+import { Moment } from 'moment'
+import * as React from 'react'
+import { SingleDatePicker } from 'react-dates'
+import { css } from 'styled-components'
 
-import field from "../../../theme/field";
-import { AnyColor as Color } from "../../../types/color";
-import { Size, Weight } from "../../../types/text";
-import { cssFactory } from "../../../utils/styled-components";
-import { StyledFieldset, StyledLabel } from "../../form/Field";
-import { Box } from "../../layout/Box";
+import field from '../../../theme/field'
+import { AnyColor as Color } from '../../../types/color'
+import { Size, Weight } from '../../../types/text'
+import { cssFactory } from '../../../utils/styled-components'
+import { StyledFieldset, StyledLabel } from '../../form/Field'
+import { Box } from '../../layout/Box'
 
 interface Props {
-    error?: string;
-    focused: boolean;
-    value: Moment | null;
-    onChange: (date: Moment | null) => void;
-    onFocusChange: (arg: { focused: boolean | null }) => void;
+    error?: string
+    focused: boolean
+    value: Moment | null
+    onChange: (date: Moment | null) => void
+    onFocusChange: (arg: { focused: boolean | null }) => void
 }
 
 export class DateField extends React.Component<Props> {
-    public state = { isTouched: false, isTouchedFlag: false };
+    public state = { isTouched: false, isTouchedFlag: false }
 
     public handleFocusChange = (arg: { focused: boolean | null }) => {
-        this.props.onFocusChange(arg);
-        const { isTouched, isTouchedFlag } = this.state;
+        this.props.onFocusChange(arg)
+        const { isTouched, isTouchedFlag } = this.state
         if (isTouchedFlag && !isTouched) {
-            this.setState({ isTouched: true });
+            this.setState({ isTouched: true })
         }
         if (!isTouchedFlag) {
-            this.setState({ isTouchedFlag: true });
+            this.setState({ isTouchedFlag: true })
         }
-    };
+    }
 
     public render() {
-        const { error, focused, value, onChange } = this.props;
-        const { isTouched } = this.state;
-        const hasError = isTouched && !!error;
+        const { error, focused, value, onChange } = this.props
+        const { isTouched } = this.state
+        const hasError = isTouched && !!error
         return (
             <Box css={genInputCSS(hasError)}>
                 <StyledFieldset>
@@ -43,10 +43,10 @@ export class DateField extends React.Component<Props> {
                         {...{
                             active: !!value || hasError,
                             error: hasError,
-                            htmlFor: "date"
+                            htmlFor: 'date',
                         }}
                     >
-                        {hasError ? error : "Date"}
+                        {hasError ? error : 'Date'}
                     </StyledLabel>
                     <SingleDatePicker
                         block
@@ -57,17 +57,17 @@ export class DateField extends React.Component<Props> {
                         isOutsideRange={this.isOutsideRange}
                         noBorder
                         numberOfMonths={1}
-                        placeholder={hasError ? "" : "Date"}
+                        placeholder={hasError ? '' : 'Date'}
                         transitionDuration={0}
                         onDateChange={onChange}
                         onFocusChange={this.handleFocusChange}
                     />
                 </StyledFieldset>
             </Box>
-        );
+        )
     }
 
-    private isOutsideRange = () => false;
+    private isOutsideRange = () => false
 }
 
 const genInputCSS = (error: boolean) =>
@@ -82,14 +82,14 @@ const genInputCSS = (error: boolean) =>
             field.getBorderStyle(
                 Color.Gray8,
                 props.theme.colors,
-                error
+                error,
             )} !important;
 		border-radius: ${props => props.theme.cornerRadii.default} !important;
 		box-sizing: border-box;
 		color: ${props => props.theme.colors.gray1} !important;
 		font-family: ${props => props.theme.text.getFont()};
 		font-weight: ${props => props.theme.text.getWeight(Weight.Normal)} !important;
-		font-size: ${props => props.theme.text.getSize(Size.Lg)};
+		font-size: ${props => props.theme.text.getSize(Size.Md)};
 		height: 2.8125rem;
 		padding: ${props =>
             props.theme.units.getValues(field.padding.input)} !important;
@@ -106,7 +106,7 @@ const genInputCSS = (error: boolean) =>
                 field.getFocusStyles(
                     Color.Gold3,
                     props.theme.colors,
-                    error
+                    error,
                 )} !important;
 		}
 	}
@@ -115,4 +115,4 @@ const genInputCSS = (error: boolean) =>
         top: 54px !important;
         z-index: ${props => props.theme.zIndex.Z_INDEX_2};
 	}
-`;
+`

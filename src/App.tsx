@@ -84,6 +84,7 @@ class App extends React.Component {
                                         isAuthenticated={isAuthenticated}
                                     />
                                     <Route
+                                        exact
                                         path="/"
                                         render={this.budgetRedirect}
                                     />

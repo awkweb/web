@@ -239,9 +239,9 @@ const sharedFieldStyles = cssFactory<InputProps>(css)`
         )};
     ${props => style('borderRadius', props.theme.cornerRadii.default)};
     box-sizing: border-box;
-    ${props => style('color', props.theme.colors[Color.Gray1])};
+    ${props => style('color', props.theme.colors.gray1)};
     ${props => style('fontFamily', props.theme.text.getFont())};
-    ${props => style('fontSize', props.theme.text.getSize(Size.Lg))};
+    ${props => style('fontSize', props.theme.text.getSize(Size.Md))};
     outline: 0;
     transition: border-color 125ms;
     width: 100%;

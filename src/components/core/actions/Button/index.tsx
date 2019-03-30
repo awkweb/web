@@ -1,133 +1,133 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import * as React from 'react'
+import { Link } from 'react-router-dom'
+import styled, { css } from 'styled-components'
 
-import { Color, Size } from "../../../types/button";
-import { TextAlign } from "../../../types/css";
+import { Color, Size } from '../../../types/button'
+import { TextAlign } from '../../../types/css'
 import {
     responsiveConditionalStyle,
     responsiveStyle,
-    style
-} from "../../../utils/css";
+    style,
+} from '../../../utils/css'
 import {
     convertLazy,
     LazyResponsive,
-    Responsive
-} from "../../../utils/responsive";
-import { cssFactory, styledFactory } from "../../../utils/styled-components";
-import { Box } from "../../layout/Box";
-import { ThemeConsumer } from "../../theme/ThemeConsumer";
+    Responsive,
+} from '../../../utils/responsive'
+import { cssFactory, styledFactory } from '../../../utils/styled-components'
+import { Box } from '../../layout/Box'
+import { ThemeConsumer } from '../../theme/ThemeConsumer'
 
 interface SharedProps {
     /**
      * When true, `display: block;`. When false, `display: inline-block;`.
      */
-    block: boolean;
+    block: boolean
 
     /**
      * Accepts a string, element, null, or some combined array of those.
      */
-    children?: React.ReactNode;
+    children?: React.ReactNode
 
     /**
      * Defaults to `Button.Color.Secondary`.
      */
-    color: Color;
+    color: Color
 
     /**
      * Applies disabled styling to the button.
      */
-    disabled: boolean;
+    disabled: boolean
 
     /**
      * Render as a `<div>`
      */
-    div?: boolean;
+    div?: boolean
 
     /**
      * Render the button w/ 100% width.
      */
-    fluid: LazyResponsive<boolean>;
+    fluid: LazyResponsive<boolean>
 
     /**
      * HTML id property.
      */
-    id?: string;
+    id?: string
 
     /**
      * Render as an `<input>`.
      */
-    input?: boolean;
+    input?: boolean
 
     /**
      * HTML name property. See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Element/name).
      */
-    name?: string;
+    name?: string
 
     /**
      * Remove background color.
      */
-    noBackground?: boolean;
+    noBackground?: boolean
 
     /**
      * Remove border.
      */
-    noBorder?: boolean;
+    noBorder?: boolean
 
     /**
      * Prevent button text from wrapping.
      */
-    noWrap?: boolean;
+    noWrap?: boolean
 
     /**
      * Callback function for button click.
      */
-    onClick?: ((e: React.MouseEvent<HTMLElement>) => void) | boolean;
+    onClick?: ((e: React.MouseEvent<HTMLElement>) => void) | boolean
 
     /**
      * Sets text alignment.
      */
-    textAlign?: TextAlign;
+    textAlign?: TextAlign
 
     /**
      * Button link destination. When provided, an `<a>` is rendered in place of `<button>`.
      */
-    to?: string | object;
+    to?: string | object
 
     /**
      * HTML `type` attribute. See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes).
      */
-    type: string;
+    type: string
 
     /**
      * In conjunction with the `input` prop, sets the button text.
      */
-    value?: string;
+    value?: string
 }
 interface Props extends SharedProps {
     /**
      * Renders loading spinner in place of the button label.
      */
-    isLoading: boolean;
+    isLoading: boolean
 
     /**
      * Defaults to `Button.Size.Md`. Size enum or Responsive size enum.
      */
-    size: LazyResponsive<Size>;
+    size: LazyResponsive<Size>
 }
 
 interface InternalProps extends SharedProps {
-    isClickable: boolean;
-    sizesByBreakpoint: Responsive<Size>;
+    isClickable: boolean
+    sizesByBreakpoint: Responsive<Size>
 }
 
 /**
  * Use `<Button>` to perform an action, such as triggering an API request, navigating to another page, or changing application state.
  */
 export class Button extends React.Component<Props> {
-    public static Color = Color;
-    public static Size = Size;
-    public static TextAlign = TextAlign;
+    public static Color = Color
+    public static Size = Size
+    public static TextAlign = TextAlign
 
     public static defaultProps = {
         block: false,
@@ -136,19 +136,19 @@ export class Button extends React.Component<Props> {
         fluid: false,
         isLoading: false,
         size: Size.Md,
-        textAlign: "center",
-        type: "button"
-    };
+        textAlign: 'center',
+        type: 'button',
+    }
 
     public preventDefault = (e: { preventDefault: () => void }) => {
-        e.preventDefault();
-    };
+        e.preventDefault()
+    }
 
     public handleClick = (e: React.MouseEvent<HTMLElement>) => {
-        if (this.props.onClick && typeof this.props.onClick === "function") {
-            this.props.onClick(e);
+        if (this.props.onClick && typeof this.props.onClick === 'function') {
+            this.props.onClick(e)
         }
-    };
+    }
 
     public render() {
         const {
@@ -170,18 +170,18 @@ export class Button extends React.Component<Props> {
             to,
             type,
             value,
-            name
-        } = this.props;
+            name,
+        } = this.props
 
-        const isDisabled = isLoading || disabled;
-        const sizesByBreakpoint = convertLazy<Size>(size);
+        const isDisabled = isLoading || disabled
+        const sizesByBreakpoint = convertLazy<Size>(size)
         const commonProps = {
             block,
             color,
             disabled: isDisabled,
             fluid,
             id,
-            isClickable: !!(onClick || to || type === "submit"),
+            isClickable: !!(onClick || to || type === 'submit'),
             name,
             noBackground,
             noBorder,
@@ -191,8 +191,8 @@ export class Button extends React.Component<Props> {
             tabIndex: isDisabled ? -1 : 0,
             textAlign,
             type,
-            value
-        };
+            value,
+        }
 
         const loadingContents = (
             <ThemeConsumer>
@@ -203,22 +203,22 @@ export class Button extends React.Component<Props> {
                                 noBackground
                                     ? theme.buttons.getBackgroundColor(
                                           color,
-                                          theme.colors
+                                          theme.colors,
                                       )
                                     : theme.buttons.getLoadingSpinnerColorName(
                                           color,
-                                          theme.colors
+                                          theme.colors,
                                       )
                             }
                         />
                     </LoadingWrapper>
                 )}
             </ThemeConsumer>
-        );
+        )
 
         const content = (
             <Box css={genButtonContentCSS(isLoading)}>{children}</Box>
-        );
+        )
         // Render an <a>
         if (to) {
             return (
@@ -228,30 +228,30 @@ export class Button extends React.Component<Props> {
                         {content}
                     </StyledDiv>
                 </Link>
-            );
+            )
         }
         // Render an <input>
         if (input) {
             const inputProps = {
                 onMouseDown: this.preventDefault,
                 type,
-                value
-            };
-            return <StyledInput {...commonProps} {...inputProps} />;
+                value,
+            }
+            return <StyledInput {...commonProps} {...inputProps} />
         }
         // Render a div
         if (div) {
             const inputProps = {
                 onMouseDown: this.preventDefault,
                 type,
-                value
-            };
+                value,
+            }
             return (
                 <StyledDiv {...commonProps} {...inputProps}>
                     {isLoading ? loadingContents : null}
                     {content}
                 </StyledDiv>
-            );
+            )
         }
 
         /**
@@ -264,7 +264,7 @@ export class Button extends React.Component<Props> {
                 {isLoading ? loadingContents : null}
                 {content}
             </StyledButton>
-        );
+        )
     }
 }
 
@@ -281,7 +281,7 @@ const LoadingWrapper = styledFactory(styled.div)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`;
+`
 
 const LoadingSpinner = styledFactory(styled.div)`
     @keyframes loading {
@@ -304,11 +304,11 @@ const LoadingSpinner = styledFactory(styled.div)`
     top: 50%;
     width: 1rem;
     z-index: 1;
-`;
+`
 const genButtonContentCSS = (isLoading: boolean) =>
     cssFactory(css)`
-        visibility: ${isLoading ? "hidden" : "visible"};
-    `;
+        visibility: ${isLoading ? 'hidden' : 'visible'};
+    `
 
 const commonStyles = cssFactory<InternalProps>(css)`
     backface-visibility: hidden;
@@ -316,56 +316,50 @@ const commonStyles = cssFactory<InternalProps>(css)`
         props.theme.buttons.getBackgroundColor(
             props.color,
             props.theme.colors,
-            props.noBackground
+            props.noBackground,
         )};
     border-radius: ${props => props.theme.cornerRadii.default};
     border: ${props =>
         props.theme.buttons.getBorderStyle(
             props.color,
             props.theme.colors,
-            props.noBorder
+            props.noBorder,
         )};
     box-sizing: border-box;
     color: ${props =>
         props.theme.buttons.getTextColor(
             props.color,
             props.theme.colors,
-            props.noBackground
+            props.noBackground,
         )} !important;
-    cursor: ${props => (props.isClickable ? "pointer" : "default")};
-    display: ${props => (props.block ? "block" : "inline-block")};
-    ${props => style("fontFamily", props.theme.text.getFont())};
-    ${props =>
-        responsiveStyle(
-            "fontSize",
-            props.sizesByBreakpoint,
-            props.theme,
-            (size: Size) => props.theme.text.getSize(size)
-        )};
+    cursor: ${props => (props.isClickable ? 'pointer' : 'default')};
+    display: ${props => (props.block ? 'block' : 'inline-block')};
+    ${props => style('fontFamily', props.theme.text.getFont())};
+    ${props => style('fontSize', props.theme.text.getSize(Size.Md))};
     font-weight: ${props => props.theme.buttons.fontWeight};
-    opacity: ${props => (props.disabled ? "0.35" : "unset")};
+    opacity: ${props => (props.disabled ? '0.35' : 'unset')};
     ${props =>
         responsiveStyle(
-            "padding",
+            'padding',
             props.sizesByBreakpoint,
             props.theme,
             (size: Size) =>
-                props.theme.units.getValues(props.theme.buttons.padding[size])
+                props.theme.units.getValues(props.theme.buttons.padding[size]),
         )};
     position: relative;
-    pointer-events: ${props => (props.disabled ? "none" : "unset")};
+    pointer-events: ${props => (props.disabled ? 'none' : 'unset')};
     text-align: ${props => props.textAlign};
     text-decoration: none;
     transition: ${props => props.theme.transitions.default};
     user-select: none;
-    white-space: ${props => (props.noWrap ? "nowrap" : "unset")};
+    white-space: ${props => (props.noWrap ? 'nowrap' : 'unset')};
     ${props =>
         responsiveConditionalStyle(
-            "width",
+            'width',
             props.fluid,
-            "100%",
-            "unset",
-            props.theme
+            '100%',
+            'unset',
+            props.theme,
         )};
     &:focus {
         ${props => props.theme.buttons.getFocusStyles()}
@@ -376,9 +370,9 @@ const commonStyles = cssFactory<InternalProps>(css)`
                 ? props.theme.buttons.getHoverStyles(
                       props.color,
                       props.theme.colors,
-                      props.noBackground
+                      props.noBackground,
                   )
-                : ""};
+                : ''};
     }
     &:active {
         ${props =>
@@ -386,18 +380,18 @@ const commonStyles = cssFactory<InternalProps>(css)`
                 ? props.theme.buttons.getActiveStyles(
                       props.color,
                       props.theme.colors,
-                      props.noBackground
+                      props.noBackground,
                   )
-                : ""};
+                : ''};
     }
-`;
+`
 
 const StyledButton = styled.button`
     ${commonStyles};
-`;
+`
 const StyledDiv = styled.div`
     ${commonStyles};
-`;
+`
 const StyledInput = styled.input`
     ${commonStyles};
-`;
+`
