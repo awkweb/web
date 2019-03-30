@@ -1,23 +1,23 @@
-import React from "react";
-import OutsideClickHandler from "react-outside-click-handler";
-import Select from "react-select";
-import { css } from "styled-components";
+import React from 'react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import Select from 'react-select'
+import { css } from 'styled-components'
 
-import { BooleanField, Box, Button, Text } from "../../../../components";
-import { cssFactory } from "../../../../components/utils/styled-components";
-import { Budget } from "../../../../types/budget";
+import { BooleanField, Box, Button, Text } from '../../../../components'
+import { cssFactory } from '../../../../components/utils/styled-components'
+import { Budget } from '../../../../types/budget'
 
 interface Props {
-    budgets: Budget[];
-    budgetFilter: string;
-    allSelected: boolean;
-    anySelected: boolean;
-    startDelete: boolean;
-    handleOnChange: () => void;
-    handleCategorize: (budgetId: string) => void;
-    handleDelete: () => void;
-    handleFilter: (budget: string) => void;
-    handleOutsideClick: () => void;
+    budgets: Budget[]
+    budgetFilter: string
+    allSelected: boolean
+    anySelected: boolean
+    startDelete: boolean
+    handleOnChange: () => void
+    handleCategorize: (budgetId: string) => void
+    handleDelete: () => void
+    handleFilter: (budget: string) => void
+    handleOutsideClick: () => void
 }
 
 export default class TableHeader extends React.Component<Props> {
@@ -27,19 +27,19 @@ export default class TableHeader extends React.Component<Props> {
             allSelected,
             anySelected,
             startDelete,
-            budgetFilter
-        } = this.props;
+            budgetFilter,
+        } = this.props
         const budgetOptions = budgets.map(b => ({
             value: b.id,
-            label: b.name
-        }));
+            label: b.name,
+        }))
         const filterOptions = [
-            { label: "All Budgets", value: "all" },
-            ...budgetOptions
-        ];
+            { label: 'All Budgets', value: 'all' },
+            ...budgetOptions,
+        ]
         const selectedFilterOption = filterOptions.find(
-            o => o.value === budgetFilter
-        );
+            o => o.value === budgetFilter,
+        )
         return (
             <Box
                 alignItems={Box.AlignItems.Center}
@@ -70,7 +70,7 @@ export default class TableHeader extends React.Component<Props> {
                             classNamePrefix="react-select"
                             components={{
                                 DropdownIndicator: null,
-                                IndicatorSeparator: null
+                                IndicatorSeparator: null,
                             }}
                             isSearchable={false}
                             maxMenuHeight={200}
@@ -92,7 +92,7 @@ export default class TableHeader extends React.Component<Props> {
                                     color={Button.Color.Secondary}
                                     onClick={this.onClickDelete}
                                 >
-                                    {startDelete ? "Really delete?" : "Delete"}
+                                    {startDelete ? 'Really delete?' : 'Delete'}
                                 </Button>
                             </OutsideClickHandler>
                         </Box>
@@ -101,46 +101,46 @@ export default class TableHeader extends React.Component<Props> {
                                 classNamePrefix="react-select"
                                 components={{
                                     DropdownIndicator: null,
-                                    IndicatorSeparator: null
+                                    IndicatorSeparator: null,
                                 }}
                                 isSearchable={false}
                                 maxMenuHeight={200}
                                 menuPlacement="auto"
                                 placeholder="Add to"
                                 options={budgetOptions}
-                                value={{ label: "Add to", value: "-1" }}
+                                value={{ label: 'Add to', value: '-1' }}
                                 onChange={this.onChangeSelect}
                             />
                         </Box>
                     </React.Fragment>
                 )}
             </Box>
-        );
+        )
     }
     private onClickDelete = () => {
-        this.props.handleDelete();
-    };
+        this.props.handleDelete()
+    }
 
     private onOutsideClick = () => {
-        this.props.handleOutsideClick();
-    };
+        this.props.handleOutsideClick()
+    }
     private onChange = () => {
-        this.props.handleOnChange();
-    };
+        this.props.handleOnChange()
+    }
 
     private onChangeSelect = (value: any) => {
         if (value) {
-            const budgetId = (value as any).value;
-            this.props.handleCategorize(budgetId);
+            const budgetId = (value as any).value
+            this.props.handleCategorize(budgetId)
         }
-    };
+    }
 
     private onChangeFilter = (value: any) => {
         if (value) {
-            const budgetId = (value as any).value;
-            this.props.handleFilter(budgetId);
+            const budgetId = (value as any).value
+            this.props.handleFilter(budgetId)
         }
-    };
+    }
 }
 
 const genBudgetFilterCSS = () =>
@@ -177,4 +177,4 @@ const genBudgetFilterCSS = () =>
     .react-select__option {
 		font-size: ${props => props.theme.text.getSize(Text.Size.Sm)};
     }
-`;
+`

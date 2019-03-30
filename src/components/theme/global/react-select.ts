@@ -1,14 +1,14 @@
 // react-select overrides
-import { Weight } from "../../types/text";
-import colors from "../colors";
-import cornerRadii from "../corner-radii";
-import text from "../text";
-import zIndex from "../z-index";
+import { Weight } from '../../types/text'
+import colors from '../colors'
+import cornerRadii from '../corner-radii'
+import text from '../text'
+import zIndex from '../z-index'
 
 export default () => `
 	.react-select__control {
 		background-color: ${colors.red1};
-        border-radius: ${cornerRadii.default} !important;
+        border-radius: ${cornerRadii.small} !important;
 		box-sizing: border-box;
         cursor: pointer !important;        
 		font-family: ${text.getFont()};
@@ -26,7 +26,7 @@ export default () => `
 	
 	.react-select__menu {
         background-color: ${colors.white};
-        border-radius: ${cornerRadii.default} !important;
+        border-radius: ${cornerRadii.small} !important;
         box-sizing: border-box;
 		margin: 0 !important;
 		overflow: hidden;
@@ -49,13 +49,13 @@ export default () => `
         }
 
         &:first-child {
-            border-top-right-radius: ${cornerRadii.default};
-            border-top-left-radius: ${cornerRadii.default};
+            border-top-right-radius: ${cornerRadii.small};
+            border-top-left-radius: ${cornerRadii.small};
         }
 
         &:last-child {
-            border-bottom-right-radius: ${cornerRadii.default};
-            border-bottom-left-radius: ${cornerRadii.default};
+            border-bottom-right-radius: ${cornerRadii.small};
+            border-bottom-left-radius: ${cornerRadii.small};
         }
 	}
 	
@@ -69,12 +69,12 @@ export default () => `
     }
     
     .react-select__option--is-selected {
-        background-color: ${colors.blue3} !important;
+        background-color: ${colors.gold2} !important;
         color: ${colors.white} !important;
 		font-weight: ${text.getWeight(Weight.Bold)};
 
         &:active {
-            background-color: ${colors.blue2} !important;
+            background-color: ${colors.gold1} !important;
         }
     }
-`;
+`

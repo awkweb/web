@@ -1,166 +1,166 @@
-import { action, computed, decorate, observable } from "mobx";
-import moment, { Moment } from "moment";
-import { parse } from "query-string";
+import { action, computed, decorate, observable } from 'mobx'
+import moment, { Moment } from 'moment'
+import { parse } from 'query-string'
 
-import api from "../api";
-import { get } from "../lib/get";
-import { Budget } from "../types/budget";
+import api from '../api'
+import { get } from '../lib/get'
+import { Budget } from '../types/budget'
 
-import RootStore from ".";
+import RootStore from '.'
 
 interface Props {
     /**
      * observable
      */
-    budgets: Budget[];
-    startDate: Moment | null;
-    endDate: Moment | null;
-    isLoading: boolean;
+    budgets: Budget[]
+    startDate: Moment | null
+    endDate: Moment | null
+    isLoading: boolean
     /**
      * computed
      */
-    totalBudgeted: number;
-    totalSpent: number;
+    totalBudgeted: number
+    totalSpent: number
     /**
      * action
      */
     changeTransactions: (
         budgetId: string,
         amount: number,
-        count: number
-    ) => void;
-    addBudget: (budget: Budget) => void;
-    getBudgets: () => void;
-    setStartDate: (startDate: Moment | null) => void;
-    setEndDate: (endDate: Moment | null) => void;
-    reset: () => void;
+        count: number,
+    ) => void
+    addBudget: (budget: Budget) => void
+    getBudgets: () => void
+    setStartDate: (startDate: Moment | null) => void
+    setEndDate: (endDate: Moment | null) => void
+    reset: () => void
 }
 
 export default class BudgetsStore implements Props {
-    public budgets: Budget[] = [];
-    public startDate: Moment | null = moment().startOf("month");
-    public endDate: Moment | null = moment();
-    public isLoading = false;
+    public budgets: Budget[] = []
+    public startDate: Moment | null = moment().startOf('month')
+    public endDate: Moment | null = moment()
+    public isLoading = false
 
-    private rootStore: RootStore;
+    private rootStore: RootStore
 
     constructor(rootStore: RootStore) {
-        this.rootStore = rootStore;
+        this.rootStore = rootStore
     }
 
     get totalBudgeted(): number {
         return (
             this.budgets.reduce(
                 (total, budget: Budget) => total + budget.budgeted,
-                0
+                0,
             ) || 0
-        );
+        )
     }
 
     get totalSpent(): number {
         return (
             this.budgets.reduce(
                 (total, budget: Budget) => total + budget.spent,
-                0
+                0,
             ) || 0
-        );
+        )
     }
 
     public changeTransactions = (
         budgetId: string,
         amount: number,
-        count: number
+        count: number,
     ) => {
-        const budget = this.budgets.find(b => b.id === budgetId);
+        const budget = this.budgets.find(b => b.id === budgetId)
         if (budget) {
-            const spent = budget.spent + amount;
+            const spent = budget.spent + amount
             this.updateBudget({
                 ...budget,
                 spent,
                 amountCents: budget.budgeted,
                 remaining: budget.budgeted - spent,
-                transactionCount: budget.transactionCount + count
-            });
+                transactionCount: budget.transactionCount + count,
+            })
         }
-    };
+    }
 
     public addBudget = (budget: Budget) => {
         this.budgets = [...this.budgets, budget].sort((a, b) => {
             if (a.name > b.name) {
-                return 1;
+                return 1
             } else if (a.name < b.name) {
-                return -1;
+                return -1
             }
-            return 0;
-        });
-        this.rootStore.transactionsStore.reset();
-    };
+            return 0
+        })
+        this.rootStore.transactionsStore.reset()
+    }
 
     public removeBudget = (budgetId: string) => {
         this.budgets = [
-            ...this.budgets.filter(budget => budget.id !== budgetId)
-        ];
-        this.rootStore.transactionsStore.reset();
-    };
+            ...this.budgets.filter(budget => budget.id !== budgetId),
+        ]
+        this.rootStore.transactionsStore.reset()
+    }
 
     public updateBudget = (budget: Budget) => {
-        const budgetIndex = this.budgets.findIndex(b => b.id === budget.id);
-        const budgetToUpdate = this.budgets.find(b => b.id === budget.id);
+        const budgetIndex = this.budgets.findIndex(b => b.id === budget.id)
+        const budgetToUpdate = this.budgets.find(b => b.id === budget.id)
         const updatedBudget = {
             ...budgetToUpdate,
             budgeted: budget.amountCents,
             remaining: budget.amountCents - (budgetToUpdate as Budget).spent,
-            ...budget
-        };
+            ...budget,
+        }
         this.budgets = [
             ...this.budgets.slice(0, budgetIndex),
             updatedBudget,
-            ...this.budgets.slice(budgetIndex + 1, this.budgets.length)
-        ];
-        this.rootStore.transactionsStore.reset();
-    };
+            ...this.budgets.slice(budgetIndex + 1, this.budgets.length),
+        ]
+        this.rootStore.transactionsStore.reset()
+    }
 
     public getBudgets = async () => {
-        const queryParams = parse(location.search);
-        const startDate = queryParams.start_date;
-        const endDate = queryParams.end_date;
+        const queryParams = parse(location.search)
+        const startDate = queryParams.start_date
+        const endDate = queryParams.end_date
 
         this.startDate = startDate
             ? moment(startDate)
-            : moment().startOf("month");
+            : moment().startOf('month')
         if (endDate) {
-            this.endDate = moment(endDate);
+            this.endDate = moment(endDate)
         }
 
         try {
-            this.isLoading = true;
+            this.isLoading = true
             const { data: budgets } = await api.budgets.getDashboard({
                 start_date: startDate,
-                end_date: endDate
-            });
-            this.budgets = budgets;
+                end_date: endDate,
+            })
+            this.budgets = budgets
         } catch (err) {
-            const error = get(() => err.response.data);
-            throw error;
+            const error = get(() => err.response.data)
+            throw error
         } finally {
-            this.isLoading = false;
+            this.isLoading = false
         }
-    };
+    }
 
     public setStartDate = (startDate: Moment | null) => {
-        this.startDate = startDate;
-    };
+        this.startDate = startDate
+    }
 
     public setEndDate = (endDate: Moment | null) => {
-        this.endDate = endDate;
-    };
+        this.endDate = endDate
+    }
 
     public reset = () => {
-        this.budgets = [];
-        this.startDate = moment().startOf("month");
-        this.endDate = moment();
-        this.isLoading = false;
-    };
+        this.budgets = []
+        this.startDate = moment().startOf('month')
+        this.endDate = moment()
+        this.isLoading = false
+    }
 }
 decorate(BudgetsStore, {
     /**
@@ -183,5 +183,5 @@ decorate(BudgetsStore, {
     getBudgets: action,
     setStartDate: action,
     setEndDate: action,
-    reset: action
-});
+    reset: action,
+})

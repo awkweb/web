@@ -35,7 +35,7 @@ export default class DateRangePicker extends React.Component<Props> {
                     pv={1}
                     onClick={this.onClickButton}
                 >
-                    <Text size={Text.Size.Sm} weight={Text.Weight.Medium}>
+                    <Text size={Text.Size.Sm} weight={Text.Weight.SemiBold}>
                         {this.displayText()}
                     </Text>
                 </Box>

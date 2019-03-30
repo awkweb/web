@@ -1,51 +1,51 @@
-import * as React from "react";
-import OutsideClickHandler from "react-outside-click-handler";
-import { css } from "styled-components";
+import * as React from 'react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { css } from 'styled-components'
 
-import { cssFactory } from "../../../utils/styled-components";
-import { Link } from "../../actions/Link";
-import { CaretDown, Icon } from "../../icons/Icon";
-import { Box } from "../../layout/Box";
-import { Col } from "../../layout/Col";
-import { Grid } from "../../layout/Grid";
-import { Row } from "../../layout/Row";
-import { Text } from "../../typography/Text";
+import { cssFactory } from '../../../utils/styled-components'
+import { Link } from '../../actions/Link'
+import { CaretDown, Icon } from '../../icons/Icon'
+import { Box } from '../../layout/Box'
+import { Col } from '../../layout/Col'
+import { Grid } from '../../layout/Grid'
+import { Row } from '../../layout/Row'
+import { Text } from '../../typography/Text'
 
-import Dropdown from "./components/Dropdown";
+import Dropdown from './components/Dropdown'
 
 interface Props {
-    location: any;
-    userInitial: string;
-    handleLogOut: () => Promise<void>;
+    location: any
+    userInitial: string
+    handleLogOut: () => Promise<void>
 }
 
 export class Navbar extends React.Component<Props> {
-    public state = { isDropdownOpen: false };
+    public state = { isDropdownOpen: false }
 
     public getLinkProps = (path: string) => {
         const {
-            location: { pathname }
-        } = this.props;
-        const active = path === pathname;
+            location: { pathname },
+        } = this.props
+        const active = path === pathname
         return {
             color: active ? Text.Color.Gray1 : Text.Color.Gray5,
-            weight: active ? Text.Weight.SemiBold : Text.Weight.Normal
-        };
-    };
+            weight: active ? Text.Weight.SemiBold : Text.Weight.Normal,
+        }
+    }
 
     public onOutsideClick = () => {
-        this.setState({ isDropdownOpen: false });
-    };
+        this.setState({ isDropdownOpen: false })
+    }
 
     public onClickDropdown = () => {
         this.setState({
-            isDropdownOpen: !this.state.isDropdownOpen
-        });
-    };
+            isDropdownOpen: !this.state.isDropdownOpen,
+        })
+    }
 
     public render() {
-        const { userInitial, handleLogOut } = this.props;
-        const { isDropdownOpen } = this.state;
+        const { userInitial, handleLogOut } = this.props
+        const { isDropdownOpen } = this.state
         return (
             <Box
                 backgroundColor={Box.BackgroundColor.White}
@@ -55,7 +55,7 @@ export class Navbar extends React.Component<Props> {
                 el={Box.Element.Nav}
                 position={Box.Position.Fixed}
             >
-                <Grid maxWidth="md" ph={{ xs: 2, md: 10 }}>
+                <Grid maxWidth="md" ph={{ xs: 2, md: 6 }}>
                     <Row>
                         <Col bottomPadding={false} fluidHeight xs={12}>
                             <Box
@@ -73,7 +73,7 @@ export class Navbar extends React.Component<Props> {
                                         <Link to="/budgets">
                                             <Text
                                                 {...this.getLinkProps(
-                                                    "/budgets"
+                                                    '/budgets',
                                                 )}
                                                 size={Text.Size.Sm}
                                             >
@@ -85,7 +85,7 @@ export class Navbar extends React.Component<Props> {
                                         <Link to="/transactions">
                                             <Text
                                                 {...this.getLinkProps(
-                                                    "/transactions"
+                                                    '/transactions',
                                                 )}
                                                 size={Text.Size.Sm}
                                             >
@@ -159,7 +159,7 @@ export class Navbar extends React.Component<Props> {
                     </Row>
                 </Grid>
             </Box>
-        );
+        )
     }
 }
 
@@ -169,15 +169,15 @@ const genNavbarOuterCSS = () =>
         right: 0;
         top: 0
         z-index: ${props => props.theme.zIndex.Z_INDEX_HIGHEST};
-    `;
+    `
 
 const genNavbarInnerCSS = () =>
     cssFactory(css)`
         height: 3.5rem;
-    `;
+    `
 
 const genAvatarCSS = () =>
     cssFactory(css)`
         height: 2rem;
         width: 2rem;
-    `;
+    `

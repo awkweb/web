@@ -1,19 +1,19 @@
-import moment from "moment";
-import React from "react";
-import styled from "styled-components";
+import moment from 'moment'
+import React from 'react'
+import styled from 'styled-components'
 
-import { Box, Text } from "../../../../components";
-import { get } from "../../../../lib/get";
-import { Transaction } from "../../../../types/transaction";
-import TablePagination from "../TablePagination";
-import TableRow from "../TableRow";
+import { Box } from '../../../../components'
+import { get } from '../../../../lib/get'
+import { Transaction } from '../../../../types/transaction'
+import TablePagination from '../TablePagination'
+import TableRow from '../TableRow'
 
 interface Props {
-    transactions: Transaction[];
-    page: number;
-    pagesCount: number;
-    selectedTransactionIds: string[];
-    selectTransaction: (id: string) => void;
+    transactions: Transaction[]
+    page: number
+    pagesCount: number
+    selectedTransactionIds: string[]
+    selectTransaction: (id: string) => void
 }
 
 export default class Table extends React.Component<Props> {
@@ -23,12 +23,12 @@ export default class Table extends React.Component<Props> {
             page,
             pagesCount,
             selectedTransactionIds,
-            selectTransaction
-        } = this.props;
+            selectTransaction,
+        } = this.props
+
         return (
             <Box
                 backgroundColor={Box.BackgroundColor.White}
-                cornerRadius={Box.CornerRadius.Small}
                 css={`
                     overflow-x: scroll;
                 `}
@@ -39,14 +39,14 @@ export default class Table extends React.Component<Props> {
                             <TableRow
                                 amountCents={transaction.amountCents}
                                 accountMask={get(
-                                    () => transaction.account.mask
+                                    () => transaction.account.mask,
                                 )}
                                 accountName={get(
-                                    () => transaction.account.name
+                                    () => transaction.account.name,
                                 )}
                                 budgetName={get(() => transaction.budget.name)}
                                 checked={selectedTransactionIds.includes(
-                                    transaction.id
+                                    transaction.id,
                                 )}
                                 date={this.formatDate(transaction.date)}
                                 key={transaction.id}
@@ -56,21 +56,6 @@ export default class Table extends React.Component<Props> {
                                 handleChange={selectTransaction}
                             />
                         ))}
-                        {transactions.length === 0 && (
-                            <Box
-                                bb
-                                bt
-                                borderColor={Box.BorderColor.Gray7}
-                                p={2}
-                            >
-                                <Text
-                                    align={Text.Align.Center}
-                                    weight={Text.Weight.Medium}
-                                >
-                                    No transactions
-                                </Text>
-                            </Box>
-                        )}
                     </tbody>
                 </StyledTable>
                 {pagesCount > 1 && (
@@ -79,19 +64,19 @@ export default class Table extends React.Component<Props> {
                     </Box>
                 )}
             </Box>
-        );
+        )
     }
     private formatDate = (date: string): string => {
-        const dateMoment = moment(date);
-        const todayMoment = moment();
+        const dateMoment = moment(date)
+        const todayMoment = moment()
         const showYear =
-            dateMoment.year() !== todayMoment.year() ? ", YYYY" : "";
-        return dateMoment.format(`MMM D${showYear}`);
-    };
+            dateMoment.year() !== todayMoment.year() ? ', YYYY' : ''
+        return dateMoment.format(`MMM D${showYear}`)
+    }
 }
 
 const StyledTable = styled.table`
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
-`;
+`

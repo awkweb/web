@@ -105,7 +105,7 @@ class TransactionPage extends React.Component<Props> {
                 <Helmet>
                     <title>{title}</title>
                 </Helmet>{' '}
-                <Grid maxWidth="md" ph={{ xs: 2, md: 10 }}>
+                <Grid maxWidth="md" ph={{ xs: 2, md: 6 }}>
                     <Row>
                         <Col xs={12}>
                             <Box

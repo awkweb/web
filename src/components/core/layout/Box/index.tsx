@@ -1,100 +1,100 @@
-import * as React from "react";
+import * as React from 'react'
 import styled, {
     css,
     FlattenInterpolation,
     InterpolationValue,
-    ThemedStyledProps
-} from "styled-components";
+    ThemedStyledProps,
+} from 'styled-components'
 
-import { Theme } from "../../../theme/index";
-import * as _Color from "../../../types/color";
-import * as _CSS from "../../../types/css";
-import * as _Element from "../../../types/element";
-import * as _Shape from "../../../types/shape";
-import * as _Size from "../../../types/space";
+import { Theme } from '../../../theme/index'
+import * as _Color from '../../../types/color'
+import * as _CSS from '../../../types/css'
+import * as _Element from '../../../types/element'
+import * as _Shape from '../../../types/shape'
+import * as _Size from '../../../types/space'
 import {
     responsiveConditionalStyle,
     responsiveStyle,
-    style
-} from "../../../utils/css";
-import { alignItems } from "../../../utils/respondTo";
-import { LazyResponsive } from "../../../utils/responsive";
-import { cssFactory } from "../../../utils/styled-components";
+    style,
+} from '../../../utils/css'
+import { alignItems } from '../../../utils/respondTo'
+import { LazyResponsive } from '../../../utils/responsive'
+import { cssFactory } from '../../../utils/styled-components'
 
-import { getBorder, getMargin, getPadding } from "./utils";
+import { getBorder, getMargin, getPadding } from './utils'
 
-export type Border = boolean | string;
+export type Border = boolean | string
 
 interface StyledProps {
     /**
      * This aligns a flex container's lines within when there is extra space in the cross-axis, similar to how justify-content aligns individual items within the main-axis.
      */
-    alignContent?: LazyResponsive<_CSS.AlignContent>;
+    alignContent?: LazyResponsive<_CSS.AlignContent>
 
     /**
      * This defines the default behaviour for how flex items are laid out along the cross axis on the current line. Think of it as the `justifyContent` version for the cross-axis (perpendicular to the main-axis).
      */
-    alignItems?: LazyResponsive<_CSS.AlignItems>;
+    alignItems?: LazyResponsive<_CSS.AlignItems>
 
     /**
      * This allows the default alignment (or the one specified by align-items) to be overridden for individual flex items.
      */
-    alignSelf?: LazyResponsive<_CSS.AlignSelf>;
+    alignSelf?: LazyResponsive<_CSS.AlignSelf>
 
     /**
      * Applies border on all sides.
      */
-    b?: LazyResponsive<Border>;
+    b?: LazyResponsive<Border>
 
     /**
      * Applies a bottom border.
      */
-    bb?: LazyResponsive<Border>;
+    bb?: LazyResponsive<Border>
 
     /**
      * Applies a left border.
      */
-    bl?: LazyResponsive<Border>;
+    bl?: LazyResponsive<Border>
 
     /**
      * Applies a right border.
      */
-    br?: LazyResponsive<Border>;
+    br?: LazyResponsive<Border>
 
     /**
      * Applies a top border.
      */
-    bt?: LazyResponsive<Border>;
+    bt?: LazyResponsive<Border>
 
     /**
      * Background color.
      */
-    backgroundColor?: LazyResponsive<_Color.AnyColor>;
+    backgroundColor?: LazyResponsive<_Color.AnyColor>
 
     /**
      * Defaults to `Box.Color.Gray4`.
      */
-    borderColor: _Color.AnyColor;
+    borderColor: _Color.AnyColor
 
     /**
      * Sets the border width.
      */
-    borderStrokeWidth?: string;
+    borderStrokeWidth?: string
 
     /**
      * Defaults to `Box.BorderStyled.Solid`.
      */
-    borderStyle: _CSS.BorderStyle;
+    borderStyle: _CSS.BorderStyle
 
     /**
      * Accepts any React node
      */
-    children?: React.ReactNode;
+    children?: React.ReactNode
 
     /**
      * Corner/border radius, using theme keywords
      */
-    cornerRadius?: LazyResponsive<_Shape.CornerRadius>;
+    cornerRadius?: LazyResponsive<_Shape.CornerRadius>
 
     /**
      * Custom css (via styled-components/css)
@@ -102,178 +102,178 @@ interface StyledProps {
     css?:
         | string
         | InterpolationValue[]
-        | FlattenInterpolation<ThemedStyledProps<Props, Theme>>;
+        | FlattenInterpolation<ThemedStyledProps<Props, Theme>>
 
     /**
      * CSS [display](https://developer.mozilla.org/en-US/docs/Web/CSS/display). Accepts `<Responsive>` values. Keyword values are `none`, `block`, `flex`, `inline-block`, `inline-flex`, `inline`, and `inherit`. `<div>` (default element) defaults to `block`.
      */
-    display?: LazyResponsive<_CSS.Display>;
+    display?: LazyResponsive<_CSS.Display>
 
     /**
      * This defines the default size of an element before the remaining space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a keyword. The auto keyword means "look at my width or height property".
      */
-    flexBasis?: LazyResponsive<_CSS.FlexBasis>;
+    flexBasis?: LazyResponsive<_CSS.FlexBasis>
 
     /**
      * Sets the main axis and direction.
      */
-    flexDirection?: LazyResponsive<_CSS.FlexDirection>;
+    flexDirection?: LazyResponsive<_CSS.FlexDirection>
 
     /**
      * This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as a proportion. It dictates what amount of the available space inside the flex container the item should take up. If all items have flex-grow set to 1, the remaining space in the container will be distributed equally to all children. If one of the children has a value of 2, the remaining space would take up twice as much space as the others (or it will try to, at least).
      */
-    flexGrow?: LazyResponsive<number>;
+    flexGrow?: LazyResponsive<number>
 
     /**
      * This defines the ability for a flex item to shrink if necessary.
      */
-    flexShrink?: LazyResponsive<number>;
+    flexShrink?: LazyResponsive<number>
 
     /**
      * By default, flex items will all try to fit onto one line. You can change that and allow the items to wrap as needed with this property.
      */
-    flexWrap?: LazyResponsive<_CSS.FlexWrap>;
+    flexWrap?: LazyResponsive<_CSS.FlexWrap>
 
     /**
      * Sets `height: 100%`
      */
-    fluidHeight?: LazyResponsive<boolean>;
+    fluidHeight?: LazyResponsive<boolean>
 
     /**
      * Sets `width: 100%`
      */
-    fluidWidth?: LazyResponsive<boolean>;
+    fluidWidth?: LazyResponsive<boolean>
 
     /**
      * This defines the alignment along the main axis. It helps distribute extra free space left over when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line.
      */
-    justifyContent?: LazyResponsive<_CSS.JustifyContent>;
+    justifyContent?: LazyResponsive<_CSS.JustifyContent>
 
     /**
      * Applies margin to all sides.
      */
-    m?: LazyResponsive<_Size.Units>;
+    m?: LazyResponsive<_Size.Units>
 
     /**
      * Applies bottom margin.
      */
-    mb?: LazyResponsive<_Size.Units>;
+    mb?: LazyResponsive<_Size.Units>
 
     /**
      * Applies horizontal margin.
      */
-    mh?: LazyResponsive<_Size.Units>;
+    mh?: LazyResponsive<_Size.Units>
 
     /**
      * Applies left margin.
      */
-    ml?: LazyResponsive<_Size.Units>;
+    ml?: LazyResponsive<_Size.Units>
 
     /**
      * Applies right margin.
      */
-    mr?: LazyResponsive<_Size.Units>;
+    mr?: LazyResponsive<_Size.Units>
 
     /**
      * Applies top margin.
      */
-    mt?: LazyResponsive<_Size.Units>;
+    mt?: LazyResponsive<_Size.Units>
 
     /**
      * Applies vertical margin.
      */
-    mv?: LazyResponsive<_Size.Units>;
+    mv?: LazyResponsive<_Size.Units>
 
     /**
      * Callback function for Box click.
      */
-    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void
 
     /**
      * Callback function for Box mouseEnter.
      */
-    onMouseEnter?: (e: React.MouseEvent<HTMLElement>) => void;
+    onMouseEnter?: (e: React.MouseEvent<HTMLElement>) => void
 
     /**
      * Callback function for Box mouseLeave.
      */
-    onMouseLeave?: (e: React.MouseEvent<HTMLElement>) => void;
+    onMouseLeave?: (e: React.MouseEvent<HTMLElement>) => void
 
     /**
      * Callback function for Box submit.
      */
-    onSubmit?: (e: React.FormEvent<HTMLElement>) => void;
+    onSubmit?: (e: React.FormEvent<HTMLElement>) => void
 
     /**
      * By default, flex items are laid out in the source order. However, the order property controls the order in which they appear in the flex container.
      */
-    order?: LazyResponsive<number>;
+    order?: LazyResponsive<number>
 
     /**
      * CSS [overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow). Accepts `<Responsive>` values.
      */
-    overflow?: LazyResponsive<_CSS.Overflow>;
+    overflow?: LazyResponsive<_CSS.Overflow>
 
     /**
      * Applies padding to all sides.
      */
-    p?: LazyResponsive<_Size.Units>;
+    p?: LazyResponsive<_Size.Units>
 
     /**
      * Applies left padding.
      */
-    pl?: LazyResponsive<_Size.Units>;
+    pl?: LazyResponsive<_Size.Units>
 
     /**
      * Applies right padding.
      */
-    pr?: LazyResponsive<_Size.Units>;
+    pr?: LazyResponsive<_Size.Units>
 
     /**
      * Applies top padding.
      */
-    pt?: LazyResponsive<_Size.Units>;
+    pt?: LazyResponsive<_Size.Units>
 
     /**
      * Applies bottom padding.
      */
-    pb?: LazyResponsive<_Size.Units>;
+    pb?: LazyResponsive<_Size.Units>
 
     /**
      * Applies vertical padding.
      */
-    pv?: LazyResponsive<_Size.Units>;
+    pv?: LazyResponsive<_Size.Units>
 
     /**
      * Applies horizontal padding.
      */
-    ph?: LazyResponsive<_Size.Units>;
+    ph?: LazyResponsive<_Size.Units>
 
     /**
      * CSS [position](https://developer.mozilla.org/en-US/docs/Web/CSS/position). Accepts `<Responsive>` values.
      */
-    position?: LazyResponsive<_CSS.Position>;
+    position?: LazyResponsive<_CSS.Position>
 
     /**
      * Horizontal alignment of an inline or table-cell box. `<Text>` should still be used to compose text.
      * See [docs](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) for more info.
      * Accepts `<Responsive>` values.
      */
-    textAlign?: LazyResponsive<_CSS.TextAlign>;
+    textAlign?: LazyResponsive<_CSS.TextAlign>
 
     /**
      * Vertical alignment of an inline or table-cell box.
      * See [docs](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align) for more info.
      * Accepts `<Responsive>` values.
      */
-    verticalAlign?: LazyResponsive<_CSS.VerticalAlign>;
+    verticalAlign?: LazyResponsive<_CSS.VerticalAlign>
 }
 
 export interface Props extends StyledProps {
     /**
      * The HTML element the `<Box>` is rendered as.
      */
-    el?: _Element.Box;
+    el?: _Element.Box
 }
 
 /**
@@ -283,25 +283,25 @@ export class Box extends React.Component<Props> {
     public static defaultProps: Partial<Props> = {
         el: _Element.Box.Div,
         borderColor: _Color.AnyColor.Gray8,
-        borderStyle: _CSS.BorderStyle.Solid
-    };
+        borderStyle: _CSS.BorderStyle.Solid,
+    }
 
-    public static AlignContent = _CSS.AlignContent;
-    public static AlignItems = _CSS.AlignItems;
-    public static AlignSelf = _CSS.AlignSelf;
-    public static BackgroundColor = _Color.AnyColor;
-    public static BorderColor = _Color.AnyColor;
-    public static BorderStyle = _CSS.BorderStyle;
-    public static CornerRadius = _Shape.CornerRadius;
-    public static Display = _CSS.Display;
-    public static Element = _Element.Box;
-    public static FlexDirection = _CSS.FlexDirection;
-    public static FlexWrap = _CSS.FlexWrap;
-    public static JustifyContent = _CSS.JustifyContent;
-    public static Overflow = _CSS.Overflow;
-    public static Position = _CSS.Position;
-    public static TextAlign = _CSS.TextAlign;
-    public static VerticalAlign = _CSS.VerticalAlign;
+    public static AlignContent = _CSS.AlignContent
+    public static AlignItems = _CSS.AlignItems
+    public static AlignSelf = _CSS.AlignSelf
+    public static BackgroundColor = _Color.AnyColor
+    public static BorderColor = _Color.AnyColor
+    public static BorderStyle = _CSS.BorderStyle
+    public static CornerRadius = _Shape.CornerRadius
+    public static Display = _CSS.Display
+    public static Element = _Element.Box
+    public static FlexDirection = _CSS.FlexDirection
+    public static FlexWrap = _CSS.FlexWrap
+    public static JustifyContent = _CSS.JustifyContent
+    public static Overflow = _CSS.Overflow
+    public static Position = _CSS.Position
+    public static TextAlign = _CSS.TextAlign
+    public static VerticalAlign = _CSS.VerticalAlign
 
     public render() {
         const props = {
@@ -350,32 +350,32 @@ export class Box extends React.Component<Props> {
             pt: this.props.pt,
             pv: this.props.pv,
             textAlign: this.props.textAlign,
-            verticalAlign: this.props.verticalAlign
-        };
+            verticalAlign: this.props.verticalAlign,
+        }
 
         switch (this.props.el) {
             case _Element.Box.Address:
-                return <Address {...props} />;
+                return <Address {...props} />
             case _Element.Box.Article:
-                return <Article {...props} />;
+                return <Article {...props} />
             case _Element.Box.Aside:
-                return <Aside {...props} />;
+                return <Aside {...props} />
             case _Element.Box.Div:
-                return <Div {...props} />;
+                return <Div {...props} />
             case _Element.Box.Footer:
-                return <Footer {...props} />;
+                return <Footer {...props} />
             case _Element.Box.Form:
-                return <Form {...props} />;
+                return <Form {...props} />
             case _Element.Box.Header:
-                return <Header {...props} />;
+                return <Header {...props} />
             case _Element.Box.Main:
-                return <Main {...props} />;
+                return <Main {...props} />
             case _Element.Box.Nav:
-                return <Nav {...props} />;
+                return <Nav {...props} />
             case _Element.Box.Section:
-                return <Section {...props} />;
+                return <Section {...props} />
             default:
-                return <Div {...props} />;
+                return <Div {...props} />
         }
     }
 }
@@ -383,94 +383,94 @@ export class Box extends React.Component<Props> {
 const styles = cssFactory<StyledProps>(css)`
     ${alignItems};
     ${props =>
-        responsiveStyle("alignContent", props.alignContent, props.theme)};
-    ${props => responsiveStyle("alignSelf", props.alignSelf, props.theme)};
+        responsiveStyle('alignContent', props.alignContent, props.theme)};
+    ${props => responsiveStyle('alignSelf', props.alignSelf, props.theme)};
     ${props =>
         responsiveStyle(
-            "backgroundColor",
+            'backgroundColor',
             props.backgroundColor,
             props.theme,
-            (c: _Color.AnyColor) => props.theme.colors[c]
+            (c: _Color.AnyColor) => props.theme.colors[c],
         )};
     ${props =>
         responsiveStyle(
-            "borderRadius",
+            'borderRadius',
             props.cornerRadius,
             props.theme,
-            (cr: _Shape.CornerRadius) => props.theme.cornerRadii[cr]
+            (cr: _Shape.CornerRadius) => props.theme.cornerRadii[cr],
         )};
-    ${style("boxSizing", "border-box")};
-    ${props => responsiveStyle("display", props.display, props.theme)};
+    ${style('boxSizing', 'border-box')};
+    ${props => responsiveStyle('display', props.display, props.theme)};
     ${props =>
         responsiveStyle(
-            "flexBasis",
+            'flexBasis',
             props.flexBasis,
             props.theme,
             (fb: _CSS.FlexBasis) =>
-                typeof fb === "number" ? props.theme.units.getValue(fb) : fb
+                typeof fb === 'number' ? props.theme.units.getValue(fb) : fb,
         )};
-    ${props => style("cursor", "pointer", !!props.onClick)};
+    ${props => style('cursor', 'pointer', !!props.onClick)};
     ${props =>
-        responsiveStyle("flexDirection", props.flexDirection, props.theme)};
-    ${props => responsiveStyle("flexGrow", props.flexGrow, props.theme)};
-    ${props => responsiveStyle("flexWrap", props.flexWrap, props.theme)};
+        responsiveStyle('flexDirection', props.flexDirection, props.theme)};
+    ${props => responsiveStyle('flexGrow', props.flexGrow, props.theme)};
+    ${props => responsiveStyle('flexWrap', props.flexWrap, props.theme)};
     ${props =>
         responsiveConditionalStyle(
-            "height",
+            'height',
             props.fluidHeight,
-            "100%",
-            "initial",
-            props.theme
+            '100%',
+            'initial',
+            props.theme,
         )};
     ${props =>
-        responsiveStyle("justifyContent", props.justifyContent, props.theme)};
-    ${props => responsiveStyle("order", props.order, props.theme)};
-    ${props => responsiveStyle("overflow", props.overflow, props.theme)};
-    ${props => responsiveStyle("position", props.position, props.theme)};
-    ${props => responsiveStyle("textAlign", props.textAlign, props.theme)};
+        responsiveStyle('justifyContent', props.justifyContent, props.theme)};
+    ${props => responsiveStyle('order', props.order, props.theme)};
+    ${props => responsiveStyle('overflow', props.overflow, props.theme)};
+    ${props => responsiveStyle('position', props.position, props.theme)};
+    ${props => responsiveStyle('textAlign', props.textAlign, props.theme)};
     ${props =>
-        responsiveStyle("verticalAlign", props.verticalAlign, props.theme)};
+        responsiveStyle('verticalAlign', props.verticalAlign, props.theme)};
     ${props =>
         responsiveConditionalStyle(
-            "width",
+            'width',
             props.fluidWidth,
-            "100%",
-            "initial",
-            props.theme
+            '100%',
+            'initial',
+            props.theme,
         )};
     ${props => getPadding(props)};
     ${props => getMargin(props)};
     ${props => getBorder(props)};
     ${props => props.css};
-`;
+`
 
 const Address = styled.address`
     ${styles};
-`;
+`
 const Article = styled.article`
     ${styles};
-`;
+`
 const Aside = styled.aside`
     ${styles};
-`;
+`
 const Div = styled.div`
     ${styles};
-`;
+`
 const Footer = styled.footer`
     ${styles};
-`;
+`
 const Form = styled.form`
     ${styles};
-`;
+`
 const Header = styled.header`
     ${styles};
-`;
+`
 const Main = styled.main`
     ${styles};
-`;
+`
 const Nav = styled.nav`
     ${styles};
-`;
+`
 const Section = styled.section`
     ${styles};
-`;
+`

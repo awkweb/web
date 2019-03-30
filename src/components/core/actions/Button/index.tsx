@@ -318,7 +318,7 @@ const commonStyles = cssFactory<InternalProps>(css)`
             props.theme.colors,
             props.noBackground,
         )};
-    border-radius: ${props => props.theme.cornerRadii.default};
+    border-radius: ${props => props.theme.cornerRadii.small};
     border: ${props =>
         props.theme.buttons.getBorderStyle(
             props.color,

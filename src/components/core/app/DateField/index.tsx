@@ -84,7 +84,7 @@ const genInputCSS = (error: boolean) =>
                 props.theme.colors,
                 error,
             )} !important;
-		border-radius: ${props => props.theme.cornerRadii.default} !important;
+		border-radius: ${props => props.theme.cornerRadii.small} !important;
 		box-sizing: border-box;
 		color: ${props => props.theme.colors.gray1} !important;
 		font-family: ${props => props.theme.text.getFont()};

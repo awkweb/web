@@ -60,23 +60,7 @@ class TransactionsPage extends React.Component<Props> {
     public render() {
         const {
             rootStore: {
-                transactionsStore: {
-                    budgets,
-                    budgetFilter,
-                    allSelected,
-                    anySelected,
-                    isLoading,
-                    selectedTransactionIds,
-                    transactions,
-                    page,
-                    pagesCount,
-                    startDelete,
-                    deleteTransactions,
-                    categorizeTransactions,
-                    handleSelectAll,
-                    selectTransaction,
-                    handleOutsideClick,
-                },
+                transactionsStore: { isLoading },
             },
         } = this.props
         return (
@@ -84,7 +68,7 @@ class TransactionsPage extends React.Component<Props> {
                 <Helmet>
                     <title>Transactions</title>
                 </Helmet>{' '}
-                <Grid maxWidth="md" ph={{ xs: 2, md: 10 }}>
+                <Grid maxWidth="md" ph={{ xs: 2, md: 6 }}>
                     <Row>
                         <Col xs={12}>
                             <Box
@@ -116,30 +100,10 @@ class TransactionsPage extends React.Component<Props> {
                     </Row>
                     <Row>
                         <Col xs={12}>
-                            <TableHeader
-                                budgets={budgets}
-                                budgetFilter={budgetFilter}
-                                allSelected={allSelected}
-                                anySelected={anySelected}
-                                startDelete={startDelete}
-                                handleOnChange={handleSelectAll}
-                                handleCategorize={categorizeTransactions}
-                                handleDelete={deleteTransactions}
-                                handleFilter={this.setBudgetFilter}
-                                handleOutsideClick={handleOutsideClick}
-                            />
                             {isLoading ? (
                                 <Loader />
                             ) : (
-                                <Table
-                                    transactions={transactions}
-                                    page={page}
-                                    pagesCount={pagesCount}
-                                    selectedTransactionIds={
-                                        selectedTransactionIds
-                                    }
-                                    selectTransaction={selectTransaction}
-                                />
+                                this.renderTransactionsTable()
                             )}
                         </Col>
                     </Row>
@@ -157,6 +121,66 @@ class TransactionsPage extends React.Component<Props> {
             pathname: '/transactions',
             search: stringify(queryParams),
         })
+    }
+
+    private renderTransactionsTable = () => {
+        const {
+            rootStore: {
+                transactionsStore: {
+                    budgets,
+                    budgetFilter,
+                    allSelected,
+                    anySelected,
+                    selectedTransactionIds,
+                    transactions,
+                    page,
+                    pagesCount,
+                    startDelete,
+                    deleteTransactions,
+                    categorizeTransactions,
+                    handleSelectAll,
+                    selectTransaction,
+                    handleOutsideClick,
+                },
+            },
+        } = this.props
+        if (!transactions.length) {
+            return (
+                <Box
+                    b
+                    borderColor={Box.BorderColor.Gray9}
+                    cornerRadius={Box.CornerRadius.Small}
+                    p={8}
+                >
+                    <Text align={Text.Align.Center} weight={Text.Weight.Medium}>
+                        No transactions
+                    </Text>
+                </Box>
+            )
+        }
+        return (
+            <React.Fragment>
+                <TableHeader
+                    budgets={budgets}
+                    budgetFilter={budgetFilter}
+                    allSelected={allSelected}
+                    anySelected={anySelected}
+                    startDelete={startDelete}
+                    handleOnChange={handleSelectAll}
+                    handleCategorize={categorizeTransactions}
+                    handleDelete={deleteTransactions}
+                    handleFilter={this.setBudgetFilter}
+                    handleOutsideClick={handleOutsideClick}
+                />
+                <Table
+                    transactions={transactions}
+                    page={page}
+                    pagesCount={pagesCount}
+                    selectedTransactionIds={selectedTransactionIds}
+                    selectTransaction={selectTransaction}
+                />
+            </React.Fragment>
+        )
     }
 }
 
