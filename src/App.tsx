@@ -37,10 +37,19 @@ class App extends React.Component {
 
     public render() {
         const { isAuthenticated, userInitial, logOut } = this.rootStore
+        const DevTools = React.lazy(() =>
+            process.env.NODE_ENV !== 'production'
+                ? Promise.resolve({ default: () => null })
+                : // tslint:disable-next-line
+                  (import('mobx-react-devtools') as any),
+        )
         return (
             <ThemeProvider>
                 <Provider rootStore={this.rootStore}>
                     <React.Fragment>
+                        <React.Suspense fallback={null}>
+                            <DevTools />
+                        </React.Suspense>
                         <Head />
                         <BrowserRouter>
                             <React.Fragment>

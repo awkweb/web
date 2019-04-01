@@ -45,7 +45,6 @@ class TransactionsPage extends React.Component<Props> {
                 },
             },
         } = this.props
-
         const queryParams = parse(location.search)
         const page = parseInt(get(() => queryParams.page, '1'), 10)
         const pageChanged = page !== currentPage

@@ -74,13 +74,16 @@ export default class BudgetsStore implements Props {
         const budget = this.budgets.find(b => b.id === budgetId)
         if (budget) {
             const spent = budget.spent + amount
-            this.updateBudget({
-                ...budget,
-                spent,
-                amountCents: budget.budgeted,
-                remaining: budget.budgeted - spent,
-                transactionCount: budget.transactionCount + count,
-            })
+            this.updateBudget(
+                {
+                    ...budget,
+                    spent,
+                    amountCents: budget.budgeted,
+                    remaining: budget.budgeted - spent,
+                    transactionCount: budget.transactionCount + count,
+                },
+                true,
+            )
         }
     }
 
@@ -103,7 +106,7 @@ export default class BudgetsStore implements Props {
         this.rootStore.transactionsStore.reset()
     }
 
-    public updateBudget = (budget: Budget) => {
+    public updateBudget = (budget: Budget, bustCache: boolean = true) => {
         const budgetIndex = this.budgets.findIndex(b => b.id === budget.id)
         const budgetToUpdate = this.budgets.find(b => b.id === budget.id)
         const updatedBudget = {
@@ -117,7 +120,9 @@ export default class BudgetsStore implements Props {
             updatedBudget,
             ...this.budgets.slice(budgetIndex + 1, this.budgets.length),
         ]
-        this.rootStore.transactionsStore.reset()
+        if (bustCache) {
+            this.rootStore.transactionsStore.reset()
+        }
     }
 
     public getBudgets = async () => {

@@ -210,10 +210,8 @@ export default class TransactionsStore implements Props {
             })
 
             const budget = this.budgets.find(b => b.id === budgetId) as Budget
-            const changedTransactions = this.transactions.filter(
-                t =>
-                    get(() => t.budget.id) !== budgetId &&
-                    transactionIds.includes(t.id),
+            const changedTransactions = this.transactions.filter(t =>
+                transactionIds.includes(t.id),
             )
             const updatedTransactions = changedTransactions.map(t => ({
                 ...t,

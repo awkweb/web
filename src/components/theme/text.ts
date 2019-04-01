@@ -1,6 +1,6 @@
-import { Element, Font, Size, Weight } from "../types/text";
+import { Element, Font, Size, Weight } from '../types/text'
 
-import units from "./units";
+import units from './units'
 
 export const TEXT_SIZES = {
     [Size.Xxs]: 0.625,
@@ -12,8 +12,8 @@ export const TEXT_SIZES = {
     [Size.Xxl]: 1.5,
     [Size.Xxxl]: 1.875,
     [Size.Xxxxl]: 2.25,
-    [Size.Xxxxxl]: 3
-};
+    [Size.Xxxxxl]: 3,
+}
 
 const WEIGHTS = {
     [Weight.Thin]: 100,
@@ -23,53 +23,53 @@ const WEIGHTS = {
     [Weight.SemiBold]: 600,
     [Weight.Bold]: 700,
     [Weight.Heavy]: 800,
-    [Weight.Black]: 900
-};
+    [Weight.Black]: 900,
+}
 
-export const typeScaleRoot = "16px";
+export const typeScaleRoot = '16px'
 
 const getFont = (type = Font.Body) => {
     switch (type) {
         case Font.Title:
-            return "'Aleo', serif";
+            return "'Aleo', serif"
         case Font.Body:
         default:
-            return "'Lato', sans-serif";
+            return "'Lato', sans-serif"
     }
-};
+}
 
 const getLineHeight = (size: number) => {
-    return size < 2 ? 1.5 : 1.25;
-};
+    return size < 2 ? 1.5 : 1.25
+}
 
 const getMargin = (el: Element) => {
     switch (el) {
-        case "p":
-            return `${units.getValues([1, 0])} !important`;
-        case "h1":
-        case "h2":
-        case "h3":
-        case "h4":
-        case "h5":
-        case "h6":
-            return "1em 0 !important";
+        case 'p':
+            return `${units.getValues([1, 0])} !important`
+        case 'h1':
+        case 'h2':
+        case 'h3':
+        case 'h4':
+        case 'h5':
+        case 'h6':
+            return '1em 0 !important'
         default:
-            return "0";
+            return '0'
     }
-};
+}
 
 const getSize = (size: Size) => {
-    return `${TEXT_SIZES[size]}rem !important;`;
-};
+    return `${TEXT_SIZES[size]}rem !important;`
+}
 
 const getWeight = (weight: Weight): number => {
-    return WEIGHTS[weight];
-};
+    return WEIGHTS[weight]
+}
 
 const tracking = {
-    normal: "normal",
-    wide: "0.1em"
-};
+    normal: 'normal',
+    wide: '0.1em',
+}
 
 const text = Object.freeze({
     getFont,
@@ -78,8 +78,8 @@ const text = Object.freeze({
     getSize,
     getWeight,
     tracking,
-    typeScaleRoot
-});
+    typeScaleRoot,
+})
 
-export type Text = typeof text;
-export default text;
+export type Text = typeof text
+export default text
