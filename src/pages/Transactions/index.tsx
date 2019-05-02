@@ -48,6 +48,7 @@ class TransactionsPage extends React.Component<Props> {
         const queryParams = parse(location.search)
         const page = parseInt(get(() => queryParams.page, '1'), 10)
         const pageChanged = page !== currentPage
+
         const budget = get(() => queryParams.budget, 'all')
         const budgetChanged = budget !== currentBudget
 
@@ -143,20 +144,6 @@ class TransactionsPage extends React.Component<Props> {
                 },
             },
         } = this.props
-        if (!transactions.length) {
-            return (
-                <Box
-                    b
-                    borderColor={Box.BorderColor.Gray9}
-                    cornerRadius={Box.CornerRadius.Small}
-                    p={8}
-                >
-                    <Text align={Text.Align.Center} weight={Text.Weight.Medium}>
-                        No transactions
-                    </Text>
-                </Box>
-            )
-        }
         return (
             <React.Fragment>
                 <TableHeader
@@ -171,13 +158,29 @@ class TransactionsPage extends React.Component<Props> {
                     handleFilter={this.setBudgetFilter}
                     handleOutsideClick={handleOutsideClick}
                 />
-                <Table
-                    transactions={transactions}
-                    page={page}
-                    pagesCount={pagesCount}
-                    selectedTransactionIds={selectedTransactionIds}
-                    selectTransaction={selectTransaction}
-                />
+                {!transactions.length ? (
+                    <Box
+                        b
+                        borderColor={Box.BorderColor.Gray9}
+                        cornerRadius={Box.CornerRadius.Small}
+                        p={8}
+                    >
+                        <Text
+                            align={Text.Align.Center}
+                            weight={Text.Weight.Medium}
+                        >
+                            No transactions
+                        </Text>
+                    </Box>
+                ) : (
+                    <Table
+                        transactions={transactions}
+                        page={page}
+                        pagesCount={pagesCount}
+                        selectedTransactionIds={selectedTransactionIds}
+                        selectTransaction={selectTransaction}
+                    />
+                )}
             </React.Fragment>
         )
     }
